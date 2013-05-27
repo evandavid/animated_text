@@ -19,7 +19,7 @@
 	        android:id="@+id/tes"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_marginRight="-2dp"
+	        android:layout_gravity="right"
 	        android:text=" "
 	        android:textSize="100sp" />
 	    
@@ -27,10 +27,21 @@
 	        android:id="@+id/tes2"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_marginLeft="-8dp"
+	        android:layout_marginLeft="-9dp"
+	        android:layout_gravity="right"
 	        android:text=" "
 	        android:textSize="100sp"
 	        android:layout_toRightOf="@+id/tes" />
+	    
+	    <TextView
+	        android:id="@+id/tes3"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="-9dp"
+	        android:text=" "
+	        android:layout_gravity="right"
+	        android:textSize="100sp"
+	        android:layout_toRightOf="@+id/tes2" />
 	    
 	    <TextView
 	        android:id="@+id/tes23"
@@ -39,7 +50,7 @@
 	        android:layout_marginLeft="-3dp"
 	        android:text="Bpm"
 	        android:textSize="40sp"
-	        android:layout_toRightOf="@+id/tes2"
+	        android:layout_toRightOf="@+id/tes3"
 	        android:layout_alignParentBottom="true" />
 	    
     </RelativeLayout>

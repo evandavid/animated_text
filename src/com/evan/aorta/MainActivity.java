@@ -14,8 +14,8 @@ import android.widget.TextView;
 public class MainActivity extends Activity {
 	public Handler mHandler = new Handler();
 	public int time = 88;
-	public TextView tes, tes2, tes3;
-	public Animation slideUp,slideUp2;
+	public TextView tes, tes2, tes3, tes23;
+	public Animation slideUp,slideUp2, slideUp3;
 	public String data;
 	public String first, second, third = null;
 	public char[] chars;
@@ -26,11 +26,13 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		tes = (TextView)findViewById(R.id.tes);
 		tes2 = (TextView)findViewById(R.id.tes2);
-		tes3 = (TextView)findViewById(R.id.tes23);
+		tes3 = (TextView)findViewById(R.id.tes3);
+		tes23 = (TextView)findViewById(R.id.tes23);
 		Typeface myTypeface = Typeface.createFromAsset(getAssets(), "lane.ttf");
 	    tes.setTypeface(myTypeface);
 	    tes2.setTypeface(myTypeface);
 	    tes3.setTypeface(myTypeface);
+	    tes23.setTypeface(myTypeface);
 		new Thread(new Runnable() {
 	        @Override
 	        public void run() {
@@ -40,7 +42,6 @@ public class MainActivity extends Activity {
 	                    mHandler.post(new Runnable() {
 	                        @Override
 	                        public void run() {
-	                        	
 	                            tes();
 	                        }
 	                    });
@@ -61,46 +62,90 @@ public class MainActivity extends Activity {
 		slideUp.setDuration(400);
 		slideUp2 = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_up);
 		slideUp2.setDuration(400);
-		
-		if (chars.length > 1){
-    		if(!String.valueOf(chars[0]).equals("1")){  
-    		    RelativeLayout.LayoutParams llp = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-    		    llp.setMargins(0, 0, -2, 0); // llp.setMargins(left, top, right, bottom);
-    		    tes.setLayoutParams(llp);
-    		}
-    	}
+		slideUp3 = AnimationUtils.loadAnimation(MainActivity.this, R.anim.slide_up);
+		slideUp3.setDuration(400);
 		
 		slideUp.setAnimationListener(new Animation.AnimationListener(){
 		    @Override
-		    public void onAnimationStart(Animation arg0) {
-		    	
-		    }           
+		    public void onAnimationStart(Animation arg0) {}           
 		    @Override
-		    public void onAnimationRepeat(Animation arg0) {
-		    }           
+		    public void onAnimationRepeat(Animation arg0) {}           
 		    @Override
 		    public void onAnimationEnd(Animation arg0) {
-		    	if (chars.length > 1)
+		    	if (chars.length == 3)
 		    		tes.setText(String.valueOf(chars[0]));
+		    	else
+		    		tes.setText(" ");
 		    }
 		});
 		
 		slideUp2.setAnimationListener(new Animation.AnimationListener(){
 		    @Override
-		    public void onAnimationStart(Animation arg0) {
-		    	
-		    }           
+		    public void onAnimationStart(Animation arg0) {}           
 		    @Override
-		    public void onAnimationRepeat(Animation arg0) {
-		    }           
+		    public void onAnimationRepeat(Animation arg0) {}           
 		    @Override
 		    public void onAnimationEnd(Animation arg0) {
-		    	if (chars.length > 1)
-		    		tes2.setText(String.valueOf(chars[1]));
-		    	else
+		    	if (chars.length == 2){
 		    		tes2.setText(String.valueOf(chars[0]));
+		    		tes.setText(" ");
+		    	}
+		    	else if (chars.length == 3)
+		    		tes2.setText(String.valueOf(chars[1]));
 		    }
 		});
+		
+		slideUp3.setAnimationListener(new Animation.AnimationListener(){
+		    @Override
+		    public void onAnimationStart(Animation arg0) {}           
+		    @Override
+		    public void onAnimationRepeat(Animation arg0) {}           
+		    @Override
+		    public void onAnimationEnd(Animation arg0) {
+		    	if (chars.length == 2){
+		    		tes3.setText(String.valueOf(chars[1]));
+		    		tes.setText(" ");
+		    	}
+		    	else if (chars.length == 3)
+		    		tes3.setText(String.valueOf(chars[2]));
+		    	else{
+		    		tes.setText(" ");
+		    		tes3.setText(String.valueOf(chars[0]));
+		    	}
+		    }
+		});
+		
+		new Thread(new Runnable() {
+		    @Override
+		    public void run() {
+		        runOnUiThread(new Runnable() {
+		            @Override
+		            public void run() {
+		            	try {
+				            Thread.sleep(200);
+				        } catch (InterruptedException e) {
+				            e.printStackTrace();
+				        }
+		            	
+		            	if (chars.length == 3){
+		            		
+//		            		if (first == null){
+		            			tes.startAnimation(slideUp);
+//		            			first = String.valueOf(chars[0]);
+//		            		}else{
+//			            		if (!first.equals(String.valueOf(chars[0]))){
+//			            			tes.startAnimation(slideUp);
+//			            			first = String.valueOf(chars[0]);
+//			            		}
+//		            		}
+		            	}
+//		            	else{
+//		            		tes.setText(" ");
+//		            	}
+		            }
+		        });
+		    }
+		}).start();
 		
 		new Thread(new Runnable() {
 		    @Override
@@ -114,35 +159,47 @@ public class MainActivity extends Activity {
 				            e.printStackTrace();
 				        }
 		            	
-		            	if (chars.length > 1){
-		            		
-		            		if (first == null){
-		            			tes.startAnimation(slideUp);
-		            			first = String.valueOf(chars[0]);
+		            	if (chars.length == 2){
+		            		if (second == null){
+		            			tes2.startAnimation(slideUp2);
+		            			second = String.valueOf(chars[0]);
 		            		}else{
-			            		if (!first.equals(String.valueOf(chars[0]))){
-			            			tes.startAnimation(slideUp);
-			            			first = String.valueOf(chars[0]);
+			            		if (!second.equals(String.valueOf(chars[0]))){
+			            			tes2.startAnimation(slideUp2);
+			            			second = String.valueOf(chars[0]);
+			            		}
+		            		}
+		            		
+		            	}else if (chars.length == 3){
+		            		if (second == null){
+		            			tes2.startAnimation(slideUp2);
+		            			second = String.valueOf(chars[1]);
+		            		}else{
+			            		if (!second.equals(String.valueOf(chars[1]))){
+			            			tes2.startAnimation(slideUp2);
+			            			second = String.valueOf(chars[1]);
 			            		}
 		            		}
 		            	}
+		            	
 		            }
 		        });
 		    }
 		}).start();
+		
 		new Thread(new Runnable() {
 		    @Override
 		    public void run() {
 		        runOnUiThread(new Runnable() {
 		            @Override
 		            public void run() {
-		            	tes2.startAnimation(slideUp2);
+		            	tes3.startAnimation(slideUp3);
 		            }
 		        });
 		    }
 		}).start();
 		
-		time = 60 + (int)(Math.random() * ((99 - 60) + 1));
+		time = 50 + (int)(Math.random() * ((260 - 50) + 1));
 	}
 
 	@Override
